@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Options</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="toolbar">
+        <div class="pencil">
+            <img src="./NewIcons/Black_Pencil.svg" alt="" id="myboy">
+            <div class="size-box">
+                <div class="size1 size"></div>
+                <div class="size2 size"></div>
+                <div class="size3 size"></div>
+            </div>
+        </div>
+        <div class="eraser">
+            <img src="./NewIcons/Eraser.svg" alt="">
+            <div class="size-box">
+                <div class="size1 size"></div>
+                <div class="size2 size"></div>
+                <div class="size3 size"></div>
+            </div>
+        </div>
+        <div class="rect">
+            <i class="fas fa-square"></i>
+            <div class="size-box">
+                <div class="size1 size"></div>
+                <div class="size2 size"></div>
+                <div class="size3 size"></div>
+            </div>
+        </div>
+        <div class="line">
+            <i class="fas fa-grip-lines-vertical"></i>
+            <div class="size-box">
+                <div class="size1 size"></div>
+                <div class="size2 size"></div>
+                <div class="size3 size"></div>
+            </div>
+        </div>
+        <div class="color-container">
+            <div class="red color"></div>
+            <div class="green color"></div>
+            <div class="blue color"></div>
+        </div>
+    </div>
+    <canvas></canvas>
+</body>
+
+<!-- script for dropdown -->
+<script>
+    let canvasBoard = document.querySelector("canvas");
+    let pencil = document.querySelector(".pencil")
+    let eraser = document.querySelector(".eraser");
+    let rect = document.querySelector(".fa-square");
+    let line = document.querySelector(".fa-grip-lines-vertical");
+    let options = document.querySelectorAll(".size-box");
+    let red = document.querySelector(".red");
+    let green = document.querySelector(".green");
+    let blue = document.querySelector(".blue");
+    let size1 = document.querySelectorAll(".size1");
+    let size2 = document.querySelectorAll(".size2");
+    let size3 = document.querySelectorAll(".size3");
+    let cTool = "pencil";
+
+    // iska use krke hm pdi hui kisi image ko show kra skte h canvas pe
+    // let image = document.querySelector("#myboy");
+    // tool.drawImage(image, 100, 100);
+
+    let tool = canvasBoard.getContext("2d");
+    canvasBoard.height = window.innerHeight;
+    canvasBoard.width = window.innerWidth;
+
+    let boardTop = canvasBoard.getBoundingClientRect().top;
+    let boardLeft = canvasBoard.getBoundingClientRect().left;
+
+    // sbke event listener yaha pe h
+    pencil.addEventListener("click", function(e) {
+        if (cTool == "pencil") {
+            options[0].style.display = "flex";
+        } else {
+            cTool = "pencil";
+            tool.lineWidth = 1;
+            for (let i = 0; i < options.length; i++) {
+                options[i].style.display = "none";
+            }
+        }
+    })
+    eraser.addEventListener("click", function(e) {
+        if (cTool == "eraser") {
+            options[1].style.display = "flex";
+        } else {
+            cTool = "eraser";
+            for (let i = 0; i < options.length; i++) {
+                options[i].style.display = "none";
+            }
+        }
+    })
+    rect.addEventListener("click", function(e) {
+        if (cTool == "rect") {
+            options[2].style.display = "flex";
+        } else {
+            cTool = "rect";
+            tool.lineWidth = 1;
+            for (let i = 0; i < options.length; i++) {
+                options[i].style.display = "none";
+            }
+        }
+    })
+    line.addEventListener("click", function(e) {
+        if (cTool == "line") {
+            options[3].style.display = "flex";
+        } else {
+            cTool = "line";
+            tool.lineWidth = 1;
+            for (let i = 0; i < options.length; i++) {
+                options[i].style.display = "none";
+            }
+        }
+    })
+    red.addEventListener("click", function() {
+        tool.strokeStyle = "lightpink";
+    })
+    green.addEventListener("click", function() {
+        tool.strokeStyle = "lightgreen";
+    })
+    blue.addEventListener("click", function() {
+        tool.strokeStyle = "lightblue";
+    })
+
+    // size1 naam ke total 4 bnde h to length 4 hui isme se koi ek click hoga 0,1,2,3. yato muje sare size ki alg class bna ke unpe eventlistener lgana pdta
+    for (let i = 0; i < size1.length; i++) {
+        size1[i].addEventListener("click", function() {
+            tool.lineWidth = 1;
+        })
+        size2[i].addEventListener("click", function() {
+            tool.lineWidth = 5;
+        })
+        size3[i].addEventListener("click", function() {
+            tool.lineWidth = 8;
+        })
+    }
+
+
+    let iX, iY, fX, fY;
+    let drawingMode = false;
+
+
+    canvasBoard.addEventListener("mousedown", function(e) {
+        if (cTool == "pencil") {
+            drawingMode = true;
+            tool.beginPath();
+            iX = e.clientX - boardLeft;
+            iY = e.clientY - boardTop;
+            tool.moveTo(iX, iY);
+        }
+        iX = e.clientX - boardLeft;
+        iY = e.clientY - boardTop;
+    })
+
+    canvasBoard.addEventListener("mouseup", function(e) {
+        if (cTool == "pencil") {
+            drawingMode = false;
+            return;
+        }
+        fX = e.clientX - boardLeft;
+        fY = e.clientY - boardTop;
+        let width = fX - iX;
+        let height = fY - iY;
+        if (cTool == "line") {
+            tool.beginPath();
+            tool.moveTo(iX, iY);
+            tool.lineTo(fX, fY);
+            tool.stroke();
+        }
+        if (cTool == "rect") {
+            tool.strokeRect(iX, iY, width, height);
+        }
+    })
+
+    canvasBoard.addEventListener("mousemove", function(e) {
+        if (cTool == "pencil") {
+            if (drawingMode == true) {
+                fX = e.clientX - boardLeft;
+                fY = e.clientY - boardTop;
+                tool.lineTo(fX, fY);
+                tool.stroke();
+                iX = fX;
+                iY = fY;
+            }
+        }
+    })
+</script>
+
+</html>
