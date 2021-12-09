@@ -1,0 +1,80 @@
+.toolbar {
+    border: 2px solid black;
+    width: 80vw;
+    height: 80px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 auto;
+}
+
+img {
+    height: 35px;
+    margin: 0px 0px 0px 46px;
+}
+
+.color-container {
+    display: flex;
+    border: 2px solid gray;
+    height: 40px;
+    width: 120px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.color {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.red {
+    background-color: lightpink;
+}
+
+.green {
+    background-color: lightgreen;
+}
+
+.blue {
+    background-color: lightblue;
+}
+
+.fas {
+    font-size: 25px;
+    margin: 0px 0px 0px 52px;
+}
+
+.fa-square {
+    margin: 0px 0px 0px 47px;
+}
+
+.size-box {
+    display: flex;
+    border: 2px solid lightgrey;
+    width: 120px;
+    height: 25px;
+    justify-content: space-evenly;
+    align-items: center;
+    display: none;
+}
+
+.size {
+    border-radius: 50%;
+    background-color: lightgray;
+}
+
+.size1 {
+    height: 8px;
+    width: 8px;
+}
+
+.size2 {
+    height: 13px;
+    width: 13px;
+}
+
+.size3 {
+    height: 18px;
+    width: 18px;
+}
